@@ -182,3 +182,7 @@ curl --location --request GET 'https://getawalkthrough.com/api/order-status/634c
   * "Error 404 not found"
 * **sqft_below_zero** - 400
   * "We need you to put in a square footage other than 0. This is how we calculate how long your photography shoot will take, and we don't want to have to leave before we are done because of an incorrect square footage.
+* **invalid_value** - 400
+  * Invalid parameter value
+* **unhandled_error** - 400
+  * Low level error message
