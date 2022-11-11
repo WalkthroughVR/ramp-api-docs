@@ -134,25 +134,39 @@ curl --location --request GET 'https://getawalkthrough.com/api/order-status/634c
 ## The Order Object
 * **order_id** - string
   * House's id in the walkthrough system.
-* **order_status** - string
-  * Listing's status. Possible values are:
-  * **unscheduled**
-    * Needs To Be Scheduled
-    * Need To Know How To Get Access
-    * Scheduled Awaiting Payment
-  * **proofing**
-    * Processed
-    * Photos / videos undergoing proofing and QA
-  * **completed**
-    * Completed
-  * **scheduled**
-    * Waiting For Processing
-    * Processing
-    * Scanned
-    * Arrived
-    * Ready For Photography
+* **user_id** - string
+  * Realtor's id in the walkthrough system.
+* **booking_user_id** - string
+  * Realtor's id in the walkthrough system.
+* **datetime** - timestamp
+  * Date created or the booking time. A UTC timestamp
 * **appointment** - timestamp
   * Scheduled date. A UTC timestamp
+* **order_status** - string
+  * Listing's status. Possible values are:
+    * **unscheduled**
+      * Needs To Be Scheduled
+      * Need To Know How To Get Access
+      * Scheduled Awaiting Payment
+    * **proofing**
+      * Processed
+      * Photos / videos undergoing proofing and QA
+    * **completed**
+      * Completed
+    * **scheduled**
+      * Waiting For Processing
+      * Processing
+      * Scanned
+      * Arrived
+      * Ready For Photography
+* **product_type** - string
+  * The listing's main product. Possible values are:
+    * Photography Package
+    * Photography Only
+    * Matterport Only
+    * Aerial Only
+* **full_address** - string
+  * The matterport link
 * **matterport_link** - string
   * The matterport link
 * **dropbox_link** - string
@@ -161,13 +175,32 @@ curl --location --request GET 'https://getawalkthrough.com/api/order-status/634c
 #### Sample Response
 ```json
 {
-    "order_id": "62827271d23e037077c74591",
-    "order_status": "scheduled",
-    "appointment": 1666066918,
-    "matterport_link": "",
-    "dropbox_link": "https://www.dropbox.com/sh/bhhwl2opxfmna1d/AAADyVTtCFBGDc_4lhREQgvca?dl=0",
+  "order_id": "636ec93fa77fe483f0990afe",
+  "user_id": "624f658c4f73fbde4cbcc73a",
+  "booking_user_id": "624f658c4f73fbde4cbcc73a",
+  "datetime": 1668204861,
+  "appointment": null,
+  "order_status": "unscheduled",
+  "product_type": "Photography Package",
+  "full_address": "2913 Walnut Street FAKE From API",
+  "matterport_link": null,
+  "dropbox_link": null,
 }
 ```
+---
+## Success Response
+* **status** - string
+  * success
+* **data** - dictionary 
+  * The house object. See reference above
+---
+## Error Response
+* **status** - string
+  * error
+* **code** - string
+  * The error's code if response's status is error. See Error codes below
+* **message** - string
+  * The error message
 ---
 ## Error Codes
 * **invalid_method** - 400
@@ -186,3 +219,5 @@ curl --location --request GET 'https://getawalkthrough.com/api/order-status/634c
   * Invalid parameter value
 * **unhandled_error** - 400
   * Low level error message
+* **house_not_found** - 404
+  * Error 404 not found
