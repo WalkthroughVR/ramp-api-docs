@@ -1,14 +1,29 @@
 # WALKTHROUGH-RAMP API DOCUMENTATION
 
 ## Endpoints
-* POST /api/add-booking
-* GET /api/order-status/<order_id>
+* V2
+  * POST /api/v2/add-booking
+  * GET /api/v2/order-status/<order_id>
+* [Legacy](legacy.md)
+  * POST /api/add-booking
+  * GET /api/order-status/<order_id>
 
 ---
-## Accept Order
-*POST **/api/add-booking***
+## Accept Order (V2)
+*POST **/api/v2/add-booking***
 
 #### Parameters
+* **addons** - optional list of addons
+  * addons[].**name** - required string
+    * Addon's name
+    * Valid values:
+      * zillow_3d_tour
+      * virtual_twilight
+      * drone_video
+      * walk_through_video
+      * custom_domain
+  * addons[].**quantity** - optional int
+  * addons[].**sqft** - optional int
 * **address** - required dictionary
   * address.**line_1** - required string
     * Address line 1 (e.g., street, PO Box, or company name).
@@ -20,28 +35,8 @@
     * [State Abbrevation](https://www.bls.gov/respondents/mwr/electronic-data-interchange/appendix-d-usps-state-abbreviations-and-fips-codes.htm), Postal (ex. CO, AL, AK, AZ)
   * address.**zip** - required int
     * ZIP
-* **lat** - optional float
-  * Latitude
-* **lng** - optional float
-  * Longitude
-* **sq_ft** - required int
-  * House's square feet
-* **addons** - required dictionary
-  * addons.**zillow_3d** - required bool
-  * addons.**aerial_addon** - required bool
-  * addons.**custom_domain** - required bool
-  * addons.**floor_plans** - required bool
-  * addons.**twilight** - required bool
-* **realtor_name** - required string
-* **realtor_email** - required string
-* **preferred_scheduled_time_1** - required timestamp
-  * Preferred listing schedule date. A UTC timestamp
-* **preferred_scheduled_time_2** - required timestamp
-  * Preferred listing schedule date. A UTC timestamp
 * **comments** - optional string
   * Comments
-* **vacant** - optional bool, default = false
-  * Is vacant?
 * **contact** - required dictionary
   * contact.**name** - required string
     * Contact's name
@@ -57,6 +52,37 @@
     * Contact's phone
   * contact.**comments** - optional string
     * Contact's comments
+* **lat** - optional float
+  * Latitude
+* **lng** - optional float
+  * Longitude
+* **preferred_scheduled_time_1** - required timestamp
+  * Preferred listing schedule date. A UTC timestamp
+* **preferred_scheduled_time_2** - required timestamp
+  * Preferred listing schedule date. A UTC timestamp
+* **main_products** - required list of main products
+  * main_products[].**name** - required string
+    * Product's name
+    * Valid values:
+      * hdr_photography
+      * 3d_tour
+      * floor_plan
+      * twilight_photography
+      * drone_photos
+  * main_products[].**quantity** - optional int
+    * Number of photos or the sqft
+      * For hdr_photography, valid values are:
+        * 25, 30, 35, 40, 45, 50
+      * For 3d_tour, valid values are:
+        * 0 - 10k sqft
+      * For floor_plan, valid values are:
+        * 0 - 8k sqft
+      * For twilight_photography no need to include quantity
+      * For drone_photos no need to include quantity
+* **realtor_email** - required string
+* **realtor_name** - required string
+* **vacant** - optional bool, default = false
+  * Is vacant?
 
 #### Response
 ```json
@@ -68,7 +94,7 @@
 
 #### Sample Request
 ```bash
-curl --location --request POST 'https://getawalkthrough.com/api/add-booking' \
+curl --location --request POST 'https://getawalkthrough.com/api/v2/add-booking' \
 --header 'Content-Type: application/json' \
 --header 'api-key: 74de3164-094d-4456-bda8-33a99f896930' \
 --data-raw '{
@@ -81,15 +107,20 @@ curl --location --request POST 'https://getawalkthrough.com/api/add-booking' \
   },
   "lat": 39.7630124,
   "lng": -104.9817728,
-  "sq_ft": 900,
-  "product_type": "photography_package",
-  "addons": {
-    "zillow_3d": true,
-    "aerial_addon": true,
-    "custom_domain": false,
-    "floor_plans": false,
-    "twilight": false
-  },
+  "main_products": [
+    {"name": "hdr_photography", "quantity": 45},
+    {"name": "3d_tour", "quantity": 8500},
+    {"name": "floor_plan", "quantity": 6000},
+    {"name": "twilight_photography"},
+    {"name": "drone_photos"}
+  ],
+  "addons": [
+    {"name": "zillow_3d_tour", "quantity": 1000},
+    {"name": "virtual_twilight", "quantity": 3},
+    {"name": "drone_video"},
+    {"name": "walk_through_video"},
+    {"name": "custom_domain"}
+  ],
   "realtor_name": "Robert Montemayor",
   "realtor_email": "roberto@getawalkthrough.com",
   "preferred_scheduled_time_1": 1666236260,
@@ -107,9 +138,8 @@ curl --location --request POST 'https://getawalkthrough.com/api/add-booking' \
 ```
 
 ---
-
-## Order Status
-*GET **/api/order-status/<order_id>***
+## Order Status (V2)
+*GET **/api/v2/order-status/<order_id>***
 
 #### Parameters
 * **order_id** - required string(ObjectId)
@@ -117,7 +147,7 @@ curl --location --request POST 'https://getawalkthrough.com/api/add-booking' \
 
 #### Sample Request
 ```bash
-curl --location --request GET 'https://getawalkthrough.com/api/order-status/634c6b5dbbcada0fb65187d1' \
+curl --location --request GET 'https://getawalkthrough.com/api/v2/order-status/634c6b5dbbcada0fb65187d1' \
 --header 'api-key: 74de3164-094d-4456-bda8-33a99f896930'
 ```
 
@@ -129,64 +159,6 @@ curl --location --request GET 'https://getawalkthrough.com/api/order-status/634c
 }
 ```
 
----
-
-## The Order Object
-* **order_id** - string
-  * House's id in the walkthrough system.
-* **user_id** - string
-  * Realtor's id in the walkthrough system.
-* **booking_user_id** - string
-  * Realtor's id in the walkthrough system.
-* **datetime** - timestamp
-  * Date created or the booking time. A UTC timestamp
-* **appointment** - timestamp
-  * Scheduled date. A UTC timestamp
-* **order_status** - string
-  * Listing's status. Possible values are:
-    * **unscheduled**
-      * Needs To Be Scheduled
-      * Need To Know How To Get Access
-      * Scheduled Awaiting Payment
-    * **proofing**
-      * Processed
-      * Photos / videos undergoing proofing and QA
-    * **completed**
-      * Completed
-    * **scheduled**
-      * Waiting For Processing
-      * Processing
-      * Scanned
-      * Arrived
-      * Ready For Photography
-* **product_type** - string
-  * The listing's main product. Possible values are:
-    * Photography Package
-    * Photography Only
-    * Matterport Only
-    * Aerial Only
-* **full_address** - string
-  * The matterport link
-* **matterport_link** - string
-  * The matterport link
-* **dropbox_link** - string
-  * The dropbox link
-
-#### Sample Response
-```json
-{
-  "order_id": "636ec93fa77fe483f0990afe",
-  "user_id": "624f658c4f73fbde4cbcc73a",
-  "booking_user_id": "624f658c4f73fbde4cbcc73a",
-  "datetime": 1668204861,
-  "appointment": null,
-  "order_status": "unscheduled",
-  "product_type": "Photography Package",
-  "full_address": "2913 Walnut Street FAKE From API",
-  "matterport_link": null,
-  "dropbox_link": null,
-}
-```
 ---
 ## Success Response
 * **status** - string
