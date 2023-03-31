@@ -186,3 +186,38 @@ curl --location --request GET 'https://getawalkthrough.com/api/order-status/634c
   "dropbox_link": null,
 }
 ```
+
+---
+## Success Response
+* **status** - string
+  * success
+* **data** - dictionary 
+  * The house object. See reference above
+---
+## Error Response
+* **status** - string
+  * error
+* **code** - string
+  * The error's code if response's status is error. See Error codes below
+* **message** - string
+  * The error message
+---
+## Error Codes
+* **invalid_method** - 400
+  * This action can only be taken in valid format.
+* **unauthorized** - 401
+  * Unauthorized 
+* **outside_service_area** - 400
+  * We don't currently serve that zip code. However, we sent a message to our operations team to see if we can make an exception. You can also call support at 303-900-0469.
+* **duplicate_entry** - 400
+  * It looks like we're already working on that address with you. Go to your dashboard to view the current status or call support at 303-900-0469.
+* **not_found** - 404
+  * "Error 404 not found"
+* **sqft_below_zero** - 400
+  * "We need you to put in a square footage other than 0. This is how we calculate how long your photography shoot will take, and we don't want to have to leave before we are done because of an incorrect square footage.
+* **invalid_value** - 400
+  * Invalid parameter value
+* **unhandled_error** - 400
+  * Low level error message
+* **house_not_found** - 404
+  * Error 404 not found

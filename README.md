@@ -109,7 +109,7 @@ curl --location --request POST 'https://getawalkthrough.com/api/v2/add-booking' 
   "lng": -104.9817728,
   "main_products": [
     {"name": "hdr_photography", "quantity": 45},
-    {"name": "3d_tour", "quantity": 8500},
+    {"name": "3d_tour", "quantity": 7500},
     {"name": "floor_plan", "quantity": 6000},
     {"name": "twilight_photography"},
     {"name": "drone_photos"}
@@ -179,17 +179,13 @@ curl --location --request GET 'https://getawalkthrough.com/api/v2/order-status/6
   * This action can only be taken in valid format.
 * **unauthorized** - 401
   * Unauthorized 
-* **outside_service_area** - 400
-  * We don't currently serve that zip code. However, we sent a message to our operations team to see if we can make an exception. You can also call support at 303-900-0469.
-* **duplicate_entry** - 400
-  * It looks like we're already working on that address with you. Go to your dashboard to view the current status or call support at 303-900-0469.
-* **not_found** - 404
-  * "Error 404 not found"
-* **sqft_below_zero** - 400
-  * "We need you to put in a square footage other than 0. This is how we calculate how long your photography shoot will take, and we don't want to have to leave before we are done because of an incorrect square footage.
+* **missing_parameter** - 400
+  * <parameter_name> is required but missing
 * **invalid_value** - 400
   * Invalid parameter value
+* **missing_quantity** - 400
+  * [].quantity for <main_product> is not found
+* **missing_name** - 400
+  * [].name is not found
 * **unhandled_error** - 400
   * Low level error message
-* **house_not_found** - 404
-  * Error 404 not found
