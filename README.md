@@ -23,12 +23,17 @@
       * walk_through_video
       * custom_domain
   * addons[].**quantity** - optional int
-  * addons[].**sqft** - optional int
 * **address** - required dictionary
-  * address.**line_1** - required string
-    * Address line 1 (e.g., street, PO Box, or company name).
-  * address.**line_2** - optional string
-    * Address line 2 (e.g., apartment, suite, unit, or building).
+  * address.**lat** - required float
+    * Latitude
+  * address.**lng** - required float
+    * Longitude
+  * address.**street_number** - optional string
+    * The street number portion of a location's address.
+  * address.**street_name** - optional string
+    * The street name portion of a location's address.
+  * address.**unit_number** - optional string
+    * The number or portion of a larger building or complex
   * address.**city** - required string
     * City (ex. Denver)
   * address.**state** - required string
@@ -158,7 +163,10 @@ curl --location --request GET 'https://getawalkthrough.com/api/v2/order-status/6
   "data": {order_object} # See reference below
 }
 ```
-
+---
+## The Order Object
+* **order_id** - string
+* **order_status** - string
 ---
 ## Success Response
 * **status** - string
