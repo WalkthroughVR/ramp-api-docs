@@ -57,10 +57,6 @@
     * Contact's phone
   * contact.**comments** - optional string
     * Contact's comments
-* **lat** - optional float
-  * Latitude
-* **lng** - optional float
-  * Longitude
 * **preferred_scheduled_time_1** - required timestamp
   * Preferred listing schedule date. A UTC timestamp
 * **preferred_scheduled_time_2** - required timestamp
@@ -104,14 +100,15 @@ curl --location --request POST 'https://getawalkthrough.com/api/v2/add-booking' 
 --header 'api-key: 74de3164-094d-4456-bda8-33a99f896930' \
 --data-raw '{
   "address": {
-    "line_1": "2995 Walnut St",
-    "line_2": "",
+    "lat": 39.7630124,
+    "lng": -104.9817728,
+    "street_number":2944,
+    "street_name": "Walnut st",
+    "unit_number": "32",
     "city": "Denver",
     "state": "CO",
     "zip": 80205
   },
-  "lat": 39.7630124,
-  "lng": -104.9817728,
   "main_products": [
     {"name": "hdr_photography", "quantity": 45},
     {"name": "3d_tour", "quantity": 7500},
