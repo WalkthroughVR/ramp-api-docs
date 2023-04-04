@@ -163,7 +163,25 @@ curl --location --request GET 'https://getawalkthrough.com/api/v2/order-status/6
 ---
 ## The Order Object
 * **order_id** - string
+  * ID of the order. UUID Version 4.
 * **order_status** - string
+  * The status of the order.
+  * Possible Values:
+    * CONFIRMED
+    * GHOST
+* **created_at** - string
+* **customer_id** - string
+* **items** - array of objects
+  * items[].**amount** - int
+  * items[].**title** - string
+* **appointments** - array of objects
+  * appointments[].**start_at** - string
+  * appointments[].**end_at** - string
+  * appointments[].**title** - string
+* **images** - array of objects
+  * images[].**original_url** - string
+  * images[].**filename** - string
+* **matterport_link** - string
 ---
 ## Success Response
 * **status** - string
