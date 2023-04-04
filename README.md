@@ -176,12 +176,37 @@ curl --location --request GET 'https://getawalkthrough.com/api/v2/order-status/6
   * items[].**title** - string
 * **appointments** - array of objects
   * appointments[].**start_at** - string
+    * The date and time (ISO 8601 format) when the appointment is set to start.
   * appointments[].**end_at** - string
+    * The date and time (ISO 8601 format) when the appointment is set to end.
   * appointments[].**title** - string
+    * The title of the appointment.
 * **images** - array of objects
   * images[].**original_url** - string
+    * A URL for the original, full-resolution version of the image. Useful for downloading.
   * images[].**filename** - string
+    * The name of the file.
 * **matterport_link** - string
+* floor_plans - array of objects
+  * floor_plans[].**title** - string
+    * The title (or caption) of the floor plan.
+  * floor_plans[].**original_url** - string
+    * A URL for the original, full-resolution version of the floor plan. Useful for downloading.
+* videos - array of objects
+  * videos[].**title** - string
+    * The title of the video given by the uploading user.
+  * videos[].**source_type** - string
+    * The original upload source of the video, used to determine how to handle the playback_url of the video and other display properties.
+    * Possible Values:
+      * YOUTUBE
+      * VIMEO
+      * OPTIMIZED
+      * UPLOADED
+      * LINK
+  * videos[].**share_url** - string
+    * A URL linking to a public viewing optimized webpage the video.
+  * videos[].**download_url** - string
+    * A URL for downloading the video.
 ---
 ## Success Response
 * **status** - string
