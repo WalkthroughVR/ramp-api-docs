@@ -18,7 +18,6 @@
     * Addon's name
     * Valid values:
       * zillow_3d_tour
-      * virtual_twilight
       * drone_video
       * walk_through_video
       * custom_domain
@@ -70,6 +69,7 @@
       * floor_plan
       * twilight_photography
       * drone_photos
+      * virtual_twilight
   * main_products[].**quantity** - optional int
     * Number of photos or the sqft
       * For hdr_photography, valid values are:
@@ -114,11 +114,11 @@ curl --location --request POST 'https://getawalkthrough.com/api/v2/add-booking' 
     {"name": "3d_tour", "quantity": 7500},
     {"name": "floor_plan", "quantity": 6000},
     {"name": "twilight_photography"},
-    {"name": "drone_photos"}
+    {"name": "drone_photos"},
+    {"name": "virtual_twilight", "quantity": 3}
   ],
   "addons": [
     {"name": "zillow_3d_tour", "quantity": 1000},
-    {"name": "virtual_twilight", "quantity": 3},
     {"name": "drone_video"},
     {"name": "walk_through_video"},
     {"name": "custom_domain"}
