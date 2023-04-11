@@ -22,6 +22,12 @@
       * walk_through_video
       * custom_domain
   * addons[].**quantity** - optional int
+    * Number of photos or the sqft
+      * For zillow_3d_tour, valid values are:
+        * 0 - 7k sqft
+      * For drone_video no need to include quantity
+      * For walk_through_video no need to include quantity
+      * For custom_domain no need to include quantity
 * **address** - required dictionary
   * address.**lat** - required float
     * Latitude
